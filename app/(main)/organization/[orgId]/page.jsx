@@ -1,9 +1,18 @@
+import { getOrganization } from '@/actions/organization'
 import React from 'react'
 
-const Organization = ({params}) => {
+const Organization = async ({params}) => {
     const {orgId} = params
-  return (
-    <div>{orgId}</div>
+    const organization = await getOrganization(orgId)
+
+    if(!organization) return <div>Organization not found</div>
+  
+    return (
+    <div>
+        <div>
+            <h1>{organization.name}'s Projects</h1>
+        </div>
+    </div>
   )
 }
 
