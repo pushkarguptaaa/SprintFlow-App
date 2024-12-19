@@ -1,5 +1,7 @@
+"use server"
+
 import { db } from "@/lib/prisma";
-import { auth } from "@clerk/nextjs/server";
+import { auth, clerkClient } from "@clerk/nextjs/server";
 
 export async function createProject(data) {
     const { userId, orgId } = auth()
