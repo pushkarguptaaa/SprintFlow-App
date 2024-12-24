@@ -43,3 +43,23 @@ export async function createProject(data) {
         throw new Error("Error creating project: " + error.message)
     }
 }
+
+export async function getProjects() {
+    const { userId, orgId } = auth()
+    if (!userId) {
+        throw new Error("Unauthorized");
+    }
+
+    const user = await db.user.findUnique({
+        where: {clerkUserId: userId}
+    })
+
+    if(!user) throw new Error("User not found");
+
+    const projects = await db.project.findMany({
+        where: { organizationId: orgId },
+        orderBy: {createdAt: "desc"}
+    })
+
+    return projects
+}
